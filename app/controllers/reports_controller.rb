@@ -6,7 +6,9 @@ class ReportsController < ApplicationController
       last_report = Report.last
       @placements = JSON.parse(response)
       @placements.each do |placement|
-        if !last_report.nil? 
+        p "WEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+        p placement['start_date'].to_date.month
+          if !last_report.nil? 
           if last_report.placement_id < placement['id']
             start_date=placement['start_date']
             end_date=placement['end_date']
@@ -38,7 +40,6 @@ class ReportsController < ApplicationController
     redirect_to reports_path
   end
  def index
-p @reports
     if params[:commit].nil?
       @reports=Report.all
       respond_to do |format|
