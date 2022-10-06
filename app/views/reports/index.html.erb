@@ -1,7 +1,8 @@
-
+<%= link_to "Retrieve reports", sync_path %>
 <table class="table">
   <thead>
     <tr>
+    <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">#</th>
       <th scope="col">Start Date</th>
       <th scope="col">End Date</th>
@@ -9,7 +10,10 @@
       <th scope="col">Client</th>
       <th scope="col">Monthly salary</th>
       <th scope="col">Salary earned</th>
-      <th scope="col">Sector</th>
+      <th scope="col"><%= form.label :Category %><br/>
+                      <%= form.select :category, ['Logistics', 'Tech', 'Driving', 'Distribution', 'Sales', 'Other']%></th>
+      <%= form.submit "Filter!", class: "btn btn-primary" %>
+      <%end%>
     </tr>
   </thead>
   <% @reports.each do |report|%>

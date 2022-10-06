@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   require 'csv'
-  def index
+  def sync
       url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=H2SO4plusNaOHequalNaSO4plusH2O"
       response = RestClient.get(url)
       last_report = Report.last
@@ -40,7 +40,15 @@ class ReportsController < ApplicationController
         format.html
         format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
       end
+    redirect_to reports_path
   end
+ def index
+  @reports=Report.all
+  respond_to do |format|
+    format.html
+    format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+  end
+ end
 
 #   def export
 #     @reports = Report.all
