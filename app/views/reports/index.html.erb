@@ -1,19 +1,26 @@
 <%= link_to "Retrieve reports", sync_path %>
+<%= link_to "Undo Filters", reports_path %>
 <table class="table">
   <thead>
     <tr>
+
     <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">#</th>
       <th scope="col">Start Date</th>
       <th scope="col">End Date</th>
       <th scope="col">Days Worked</th>
-      <th scope="col">Client</th>
+      <th scope="col"><%= form.label :Client %><br/><%= form.select :client, Report.group(:client).count.keys%>
+                      <%= form.submit "Filter by client", class: "btn btn-primary" %>
+                      <%end%>
+</th>
+    <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">Monthly salary</th>
       <th scope="col">Salary earned</th>
       <th scope="col"><%= form.label :Category %><br/>
-                      <%= form.select :category, ['Logistics', 'Tech', 'Driving', 'Distribution', 'Sales', 'Other']%></th>
-      <%= form.submit "Filter!", class: "btn btn-primary" %>
+      <%= form.select :category, ['Logistics', 'Tech', 'Driving', 'Distribution', 'Sales', 'Other']%></th>
+                      <%= form.submit "Filter by sector", class: "btn btn-primary" %>
       <%end%>
+    
     </tr>
   </thead>
   <% @reports.each do |report|%>

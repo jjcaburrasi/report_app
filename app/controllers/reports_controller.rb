@@ -35,20 +35,25 @@ class ReportsController < ApplicationController
             Report.create!(start_date: start_date, end_date: end_date, monthly_salary: salary, client: client, sector: sector, placement_id: placement_id)
         end
       end
-      @reports=Report.all
-      respond_to do |format|
-        format.html
-        format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
-      end
     redirect_to reports_path
   end
  def index
-  @reports=Report.all
-  respond_to do |format|
-    format.html
-    format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+p @reports
+    if params[:commit].nil?
+      @reports=Report.all
+      respond_to do |format|
+      format.html
+      format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+      end
+    else
+      if params[:category] && params[:client].nil?
+      @reports=Report.where("sector= ?", params[:category])
+      elsif params[:client] && params[:category].nil?
+      @reports=Report.where("client= ?", params[:client])
+      end
+    end
   end
- end
+ 
 
 #   def export
 #     @reports = Report.all
