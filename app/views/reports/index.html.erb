@@ -6,15 +6,13 @@
 
     <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">#</th>
-      <th scope="col">Start Date</th>
-      <th scope="col">End Date</th>
+      <th scope="col">Month</th>
       <th scope="col">Days Worked</th>
       <th scope="col"><%= form.label :Client %><br/><%= form.select :client, Report.group(:client).count.keys%>
                       <%= form.submit "Filter by client", class: "btn btn-primary" %>
                       <%end%>
 </th>
     <%= form_with url: "/reports", method: :get do |form| %>
-      <th scope="col">Monthly salary</th>
       <th scope="col">Salary earned</th>
       <th scope="col"><%= form.label :Category %><br/>
       <%= form.select :category, ['Logistics', 'Tech', 'Driving', 'Distribution', 'Sales', 'Other']%></th>
@@ -27,12 +25,10 @@
   <tbody>
     <tr>
       <th scope="row"><%=report.id%></th>
-      <td><%=report.start_date%></td>
-      <td><%=report.end_date%></td>
-      <td><%=(report.end_date - report.start_date).to_i%> Days</td>
+      <td><%=report.month%></td>
+      <td><%=report.days%></td>
       <td><%=report.client%></td>
-      <td><%=report.monthly_salary%></td>
-      <td><%=((report.monthly_salary)/30) * (report.end_date - report.start_date).to_i%></td>
+      <td><%=report.salary_earned%></td>
       <td><%=report.sector%></td>
     </tr>
   <%end%>

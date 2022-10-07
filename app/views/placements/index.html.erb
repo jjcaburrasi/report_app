@@ -1,0 +1,22 @@
+<div class='container'>
+  <h1>Placements</h1>
+  <div class= "col-md-8 col-md-offset-2">
+    <table class='table'>
+      <tr>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Client</th>
+        <th>Sector</th>
+        <th>Monthly salary</th>
+      </tr>
+      <% @placements.each do |placement| %>
+        <tr>
+            <td><%=placement.start_date%></td>
+            <td><%=placement.end_date%></td>
+            <td><%=placement.client%></td>
+            <td><%=placement.category%></td>
+            <td><%=placement.monthly_salary%></td>
+        </tr>
+      <%end%>
+    </table>
+</div>
