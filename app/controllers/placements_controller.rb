@@ -50,3 +50,4 @@ class PlacementsController < ApplicationController
           end
     end
 end
+

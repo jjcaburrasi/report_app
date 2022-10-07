@@ -34,6 +34,7 @@
       <td><%=report.client%></td>
       <td><%=report.salary_earned%></td>
       <td><%=report.sector%></td>
+      <td><%= link_to "Show", report_path(report.id)%></td>
     </tr>
   <%end%>
   <tbody>
