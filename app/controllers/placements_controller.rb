@@ -49,5 +49,23 @@ class PlacementsController < ApplicationController
           format.csv { send_data @placements.to_csv, filename: "placements-#{Date.today}.csv" }
           end
     end
+
+    private
+
+    def array_of_months(start_date,end_date)
+      from = start_date
+      to = end_date
+      (from..to).group_by {|a| [a.year, a.month]}.map do |group|
+        group.first.last
+      end
+    end
+ 
+    def array_of_days(start_date, end_date)
+      from = start_date
+      to = end_date
+      (from..to).group_by {|a| [a.year, a.month]}.map do |group|
+        group.last.length
+      end
+    end
 end
 

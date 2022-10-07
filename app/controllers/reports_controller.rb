@@ -17,10 +17,19 @@ class ReportsController < ApplicationController
               sector =placement['job_request']['category']
               placement_id=placement['id']
               months = array_of_months(start_date, end_date)
-              days = array_of_months(start_date, end_date)
+              days = array_of_days(start_date, end_date)
               (0..(months.length-1)).each do |i|
                 salary_earned = ((salary.to_f)/30)*days[i]
-                Report.create!(days: days[i], month: months[i], salary_earned: salary_earned, client: client, sector: sector, placement_id: placement_id)
+                if Report.where(client: client).find_by(month:months[i])
+                  @report = Report.where(client: client).find_by(month:months[i])
+                  puts 'HOLAAAA'
+                  puts @report.id
+                  new_salary = report.salary_earned + salary_earned
+                  new_days = report.days + days[i]
+                  @report.update(salary_earned: new_salary, days: new_days)
+                else
+                  Report.create!(days: days[i], month: months[i], salary_earned: salary_earned, client: client, sector: sector, placement_id: placement_id)
+                end
               end
             else 
               flash[:info] = "There aren't new reports" 
