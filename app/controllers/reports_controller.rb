@@ -46,7 +46,9 @@ class ReportsController < ApplicationController
       end
     redirect_to reports_path
   end
-
+def show
+  @report=Report.find(params[:id])
+end
 def export
   if params[:commit].nil?
     p "WIIIIIIIIIIIIIIIIIIIIIII"
