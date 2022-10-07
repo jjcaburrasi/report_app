@@ -35,7 +35,7 @@ class ReportsController < ApplicationController
             sector =placement['job_request']['category']
             placement_id=placement['id']
             months = array_of_months(start_date, end_date)
-            days = array_of_months(start_date, end_date)
+            days = array_of_days(start_date, end_date)
             Placement.create(end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector)
             (0..(months.length-1)).each do |i|
               salary_earned = ((salary.to_f)/30)*days[i]
@@ -70,7 +70,7 @@ class ReportsController < ApplicationController
         group.first.last
       end
     end
-
+ 
     def array_of_days(start_date, end_date)
       from = start_date
       to = end_date
@@ -78,5 +78,5 @@ class ReportsController < ApplicationController
         group.last.length
       end
     end
-      
+
 end
