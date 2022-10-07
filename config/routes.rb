@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   devise_for :admins
   resources :reports
   resources :placements, only: [:index]
-
+  get '/retrieve', to: 'placements#retrieve'
+  get '/export_placements', to: 'placements#export_placements'
   
   
 end
