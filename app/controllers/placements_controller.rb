@@ -5,14 +5,18 @@ class PlacementsController < ApplicationController
 
     def index
         @placements = Placement.all
+        @one_time = ReuseWorkers.call(@placements)[1]
+        @repeated = ReuseWorkers.call(@placements)[0]
     end
 
     def retrieve
         url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=H2SO4plusNaOHequalNaSO4plusH2O"
         response = RestClient.get(url)
-        last_report = Report.last
         @placements = JSON.parse(response)
         @placements.each do |placement|
+            puts placement
+            puts placement['worker_id']
+            last_report = Report.last
             if !last_report.nil? 
                 if last_report.placement_id < placement['id']
                 start_date=placement['start_date'].to_date
@@ -22,9 +26,10 @@ class PlacementsController < ApplicationController
                 client =placement['client']['name']
                 sector =placement['job_request']['category']
                 placement_id=placement['id']
+                worker_id = placement['worker_id']
                 months = array_of_months(start_date, end_date)
                 days = array_of_months(start_date, end_date)
-                Placement.create(end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector)
+                Placement.create(worker_id: worker_id, end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector)
                 else 
                 flash[:info] = "There aren't new placements" 
                 # redirect_to request.referer
@@ -37,9 +42,10 @@ class PlacementsController < ApplicationController
               client =placement['client']['name']
               sector =placement['job_request']['category']
               placement_id=placement['id']
+              worker_id = placement['worker_id']
               months = array_of_months(start_date, end_date)
               days = array_of_days(start_date, end_date)
-              Placement.create(end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector)
+              Placement.create(worker_id: worker_id, end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector)
           end
         end
       redirect_to placements_path
