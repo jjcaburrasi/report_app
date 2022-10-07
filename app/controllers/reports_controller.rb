@@ -4,9 +4,9 @@ class ReportsController < ApplicationController
   def sync
       url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=H2SO4plusNaOHequalNaSO4plusH2O"
       response = RestClient.get(url)
-      last_report = Report.last
       @placements = JSON.parse(response)
       @placements.each do |placement|
+        last_report = Report.last
           if !last_report.nil? 
             if last_report.placement_id < placement['id']
               start_date=placement['start_date'].to_date
@@ -20,12 +20,13 @@ class ReportsController < ApplicationController
               days = array_of_days(start_date, end_date)
               (0..(months.length-1)).each do |i|
                 salary_earned = ((salary.to_f)/30)*days[i]
+                p "WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
                 if Report.where(client: client).find_by(month:months[i])
                   @report = Report.where(client: client).find_by(month:months[i])
-                  puts 'HOLAAAA'
+                  puts 'HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                   puts @report.id
-                  new_salary = report.salary_earned + salary_earned
-                  new_days = report.days + days[i]
+                  new_salary = @report.salary_earned + salary_earned
+                  new_days = @report.days + days[i]
                   @report.update(salary_earned: new_salary, days: new_days)
                 else
                   Report.create!(days: days[i], month: months[i], salary_earned: salary_earned, client: client, sector: sector, placement_id: placement_id)
@@ -36,6 +37,7 @@ class ReportsController < ApplicationController
               # redirect_to request.referer
             end
         else
+          p"WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
             start_date=placement['start_date'].to_date
             end_date=placement['end_date'].to_date
             salary=placement['monthly_salary']
