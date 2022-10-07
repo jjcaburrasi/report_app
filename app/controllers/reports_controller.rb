@@ -53,40 +53,42 @@ class ReportsController < ApplicationController
       end
     redirect_to reports_path
   end
-def show
-  @report=Report.find(params[:id])
-end
-def export
-  if params[:commit].nil?
-    
-    @reports=Report.all
-    respond_to do |format|
-    format.html
-    format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
-    end
-  else
-      if !params[:client].nil?
-        @reports=Report.where("client= ?", params[:client])
-        respond_to do |format|
-          format.html
-          format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
-          end 
-      elsif !params[:month].nil?
-        @reports=Report.where("month= ?", params[:month])
-        respond_to do |format|
-          format.html
-          format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
-          end
-      elsif !params[:category].nil?
-        @reports=Report.where("sector= ?", params[:category])
-        respond_to do |format|
-          format.html
-          format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
-          end   
-      end
+
+  def show
+    @report=Report.find(params[:id])
+    @comments = @report.comments
   end
-  
-end
+
+  def export
+    if params[:commit].nil?
+      @reports=Report.all
+      respond_to do |format|
+      format.html
+      format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+      end
+    else
+        if !params[:client].nil?
+          @reports=Report.where("client= ?", params[:client])
+          respond_to do |format|
+            format.html
+            format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+            end 
+        elsif !params[:month].nil?
+          @reports=Report.where("month= ?", params[:month])
+          respond_to do |format|
+            format.html
+            format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+            end
+        elsif !params[:category].nil?
+          @reports=Report.where("sector= ?", params[:category])
+          respond_to do |format|
+            format.html
+            format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+            end   
+        end
+    end
+    
+  end
 
 
  def index
@@ -124,6 +126,6 @@ end
       return unless !current_admin
       flash[:danger]="Access denied"
       redirect_to root_path
-  end
+    end
 
 end

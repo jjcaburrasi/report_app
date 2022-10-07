@@ -1,4 +1,5 @@
 class Report < ApplicationRecord
+    has_many :comments
     def self.to_csv
         attributes = %w{month days salary_earned client sector}
     

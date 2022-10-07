@@ -1,4 +1,7 @@
 class PlacementsController < ApplicationController
+    before_action :authorized?
+    require 'csv'
+
 
     def index
         @placements = Placement.all
@@ -66,6 +69,12 @@ class PlacementsController < ApplicationController
       (from..to).group_by {|a| [a.year, a.month]}.map do |group|
         group.last.length
       end
+    end
+
+    def authorized?
+        return unless !current_admin
+        flash[:danger]="Access denied"
+        redirect_to root_path
     end
 end
 
