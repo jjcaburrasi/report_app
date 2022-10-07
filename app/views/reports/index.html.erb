@@ -17,7 +17,7 @@
                       <%end%>
 </th>
     <%= form_with url: "/reports", method: :get do |form| %>
-      <th scope="col">Salary earned</th>
+      <th scope="col">Total Factured</th>
       <th scope="col"><%= form.label :Category %><br/>
       <%= form.select :category, ['Logistics', 'Tech', 'Driving', 'Distribution', 'Sales', 'Other']%></th>
                       <%= form.submit "Filter by sector", class: "btn btn-primary" %>
@@ -36,6 +36,19 @@
       <td><%=report.sector%></td>
     </tr>
   <%end%>
+  <tbody>
+    <tr>
+      <th scope="row">Total</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><% total_to_be_factured=0%>
+          <% @reports.each do |report|%>
+          <% total_to_be_factured+=report.salary_earned%>
+          <%end%>
+          <%=total_to_be_factured%></td>
+      <td></td>
+    </tr>
 
   </tbody>
 </table>

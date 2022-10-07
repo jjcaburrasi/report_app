@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  before_action :authorized?
   require 'csv'
   def sync
       url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=H2SO4plusNaOHequalNaSO4plusH2O"
@@ -111,5 +112,11 @@ end
         group.last.length
       end
     end
+
+    def authorized?
+      return unless !current_admin
+      flash[:danger]="Access denied"
+      redirect_to root_path
+  end
 
 end
