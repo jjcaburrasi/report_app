@@ -45,20 +45,53 @@ class ReportsController < ApplicationController
       end
     redirect_to reports_path
   end
+
+def export
+  if params[:commit].nil?
+    p "WIIIIIIIIIIIIIIIIIIIIIII"
+    @reports=Report.all
+    respond_to do |format|
+    format.html
+    format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+    end
+  else
+      if !params[:client].nil?
+        @reports=Report.where("client= ?", params[:client])
+        respond_to do |format|
+          format.html
+          format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+          end 
+      elsif !params[:month].nil?
+        @reports=Report.where("month= ?", params[:month])
+        respond_to do |format|
+          format.html
+          format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+          end
+      elsif !params[:category].nil?
+        @reports=Report.where("sector= ?", params[:category])
+        respond_to do |format|
+          format.html
+          format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+          end   
+      end
+  end
+  
+end
+
+
  def index
     @placements
-    if params[:commit].nil?
-      @reports=Report.all
-      respond_to do |format|
-      format.html
-      format.csv { send_data @reports.to_csv, filename: "reports-#{Date.today}.csv" }
+    
+    if !params[:commit].nil?
+      if params[:category] 
+      @reports=Report.where("sector= ?", params[:category])
+      elsif params[:client]
+      @reports=Report.where("client= ?", params[:client])
+      elsif params[:month]
+      @reports=Report.where("month= ?", params[:month])
       end
     else
-      if params[:category] && params[:client].nil?
-      @reports=Report.where("sector= ?", params[:category])
-      elsif params[:client] && params[:category].nil?
-      @reports=Report.where("client= ?", params[:client])
-      end
+      @reports=Report.all
     end
   end
   private

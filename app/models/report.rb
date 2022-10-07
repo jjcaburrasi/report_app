@@ -1,6 +1,6 @@
 class Report < ApplicationRecord
     def self.to_csv
-        attributes = %w{start_date end_date monthly_salary client sector}
+        attributes = %w{month days salary_earned client sector}
     
         CSV.generate(headers: true) do |csv|
           csv << attributes

@@ -6,7 +6,11 @@
 
     <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">#</th>
-      <th scope="col">Month</th>
+      <th scope="col"><%= form.label :Month %><br/><%= form.select :month, Report.group(:month).count.keys%>
+                      <%= form.submit "Filter by month", class: "btn btn-primary" %>
+                      <%end%>
+</th>
+      <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">Days Worked</th>
       <th scope="col"><%= form.label :Client %><br/><%= form.select :client, Report.group(:client).count.keys%>
                       <%= form.submit "Filter by client", class: "btn btn-primary" %>
@@ -35,4 +39,24 @@
 
   </tbody>
 </table>
-<%= link_to "Export", reports_path(format: 'csv') %>
+
+<% if params[:commit].nil?%>
+  <%= link_to "Export", export_path(format: 'csv'),class: "btn btn-primary" %>
+<% else%>
+    <% if !params[:client].nil? %>
+      <%= form_with url: export_path(format: 'csv'), method: :get do |form| %>
+      <%= hidden_field_tag :client, params[:client]%>
+      <%= form.submit "Export!!", class: "btn btn-primary" %>
+      <% end %>
+    <% elsif !params[:month].nil? %>
+      <%= form_with url: export_path(format: 'csv'), method: :get do |form| %>
+      <%= hidden_field_tag :month, params[:month]%>
+      <%= form.submit "Export!!", class: "btn btn-primary" %>
+      <% end %>
+    <% elsif !params[:category].nil? %>
+      <%= form_with url: export_path(format: 'csv'), method: :get do |form| %>
+      <%= hidden_field_tag :category, params[:category]%>
+      <%= form.submit "Export!!", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+<% end %>
