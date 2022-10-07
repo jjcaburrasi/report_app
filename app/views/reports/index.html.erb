@@ -1,5 +1,7 @@
-<%= link_to "Retrieve reports", sync_path %>
+<%= link_to "Retrieve reports", sync_path , class:'retrieve-button'%><br/>
+<br/>
 <%= link_to "Undo Filters", reports_path %>
+<h2> Reports </h2>
 <table class="table">
   <thead>
     <tr>
@@ -9,20 +11,20 @@
       <th scope="col"><%= form.label :Month %><br/><%= form.select :month, Report.group(:month).count.keys%>
                       <%= form.submit "Filter by month", class: "btn btn-primary" %>
                       <%end%>
-</th>
+      </th>
       <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">Days Worked</th>
       <th scope="col"><%= form.label :Client %><br/><%= form.select :client, Report.group(:client).count.keys%>
                       <%= form.submit "Filter by client", class: "btn btn-primary" %>
                       <%end%>
-</th>
+      </th>
     <%= form_with url: "/reports", method: :get do |form| %>
       <th scope="col">Total Factured</th>
       <th scope="col"><%= form.label :Category %><br/>
-      <%= form.select :category, ['Logistics', 'Tech', 'Driving', 'Distribution', 'Sales', 'Other']%></th>
-                      <%= form.submit "Filter by sector", class: "btn btn-primary" %>
-      <%end%>
-    
+      <%= form.select :category, ['Logistics', 'Tech', 'Driving', 'Distribution', 'Sales', 'Other']%>
+                      <%= form.submit "Filter by category", class: "btn btn-primary" %>
+                      <%end%>
+      </th>
     </tr>
   </thead>
   <% @reports.each do |report|%>

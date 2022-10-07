@@ -1,5 +1,5 @@
-<div class='container'>
-  <h1>Report</h1>
+<div class='container report-show'>
+  <h1>Report for <%=@report.client%> for the month of <%=Date::MONTHNAMES[@report.month]%></h1>
   <div class= "col-md-8 col-md-offset-2">
     <table class='table'>
       <tr>
@@ -9,17 +9,30 @@
         <th>Factured</th>
         <th>Sector</th>
       </tr>
-        <tr>
-        <td><%=@report.month%></td>
-        <td><%=@report.days%></td>
-        <td><%=@report.client%></td>
-        <td><%=@report.salary_earned%></td>
-        <td><%=@report.sector%></td>
-        </tr>
+      <tr>
+      <td><%=@report.month%></td>
+      <td><%=@report.days%></td>
+      <td><%=@report.client%></td>
+      <td><%=@report.salary_earned%></td>
+      <td><%=@report.sector%></td>
+      </tr>
     </table>
-    </div>
-    
-<h1>Comments</h1>
+  </div>  
+  <div class='comments'>
+    <h3>Comments</h3>
+    <%@comments.each do |comment| %>
+    <div class='comment-card'>
+      <p><%=comment.content%></p>
+      </div>
+    <%end%>
+    <%= form_for ([@report, Comment.new]) do |f| %>
+      <div class="field">
+          <%= f.text_area :content, placeholder: "Add new comment..." %>
+      </div>
+      <%= f.submit "Post", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
 
     
     
