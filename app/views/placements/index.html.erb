@@ -1,3 +1,4 @@
+<%= link_to "Retrieve placements", retrieve_path %>
 <div class='container'>
   <h1>Placements</h1>
   <div class= "col-md-8 col-md-offset-2">
@@ -19,4 +20,6 @@
         </tr>
       <%end%>
     </table>
+      <%= link_to "Export", export_placements_path(format: 'csv'),class: "btn btn-primary" %>
+
 </div>
