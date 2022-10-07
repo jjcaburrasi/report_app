@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   devise_for :admins
   resources :reports
+  resources :placements, only: [:index]
 
   
   
