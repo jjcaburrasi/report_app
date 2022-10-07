@@ -20,6 +20,7 @@
         </tr>
       <%end%>
     </table>
-      <%= link_to "Export", export_placements_path(format: 'csv'),class: "btn btn-primary" %>
+    <%= link_to "Export", export_placements_path(format: 'csv'),class: "btn btn-primary" %>
+    <%= pie_chart [['one time', @one_time], ['repeated', @repeated]] %>
 
 </div>
