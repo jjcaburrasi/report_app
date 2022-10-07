@@ -2,7 +2,8 @@ class ReportsController < ApplicationController
   before_action :authorized?
   require 'csv'
   def sync
-      url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=H2SO4plusNaOHequalNaSO4plusH2O"
+      url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=#{ENV["KEY"]}"
+      p url
       response = RestClient.get(url)
       @placements = JSON.parse(response)
       @placements.each do |placement|
@@ -20,10 +21,8 @@ class ReportsController < ApplicationController
               days = array_of_days(start_date, end_date)
               (0..(months.length-1)).each do |i|
                 salary_earned = ((salary.to_f)/30)*days[i]
-                p "WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
                 if Report.where(client: client).find_by(month:months[i])
                   @report = Report.where(client: client).find_by(month:months[i])
-                  puts 'HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                   puts @report.id
                   new_salary = @report.salary_earned + salary_earned
                   new_days = @report.days + days[i]
@@ -36,8 +35,7 @@ class ReportsController < ApplicationController
               flash[:info] = "There aren't new reports" 
               # redirect_to request.referer
             end
-        else
-          p"WIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
+          else
             start_date=placement['start_date'].to_date
             end_date=placement['end_date'].to_date
             salary=placement['monthly_salary']
@@ -60,7 +58,7 @@ def show
 end
 def export
   if params[:commit].nil?
-    p "WIIIIIIIIIIIIIIIIIIIIIII"
+    
     @reports=Report.all
     respond_to do |format|
     format.html
