@@ -16,7 +16,7 @@ class PlacementsController < ApplicationController
         @placements.each do |placement|
             puts placement
             puts placement['worker_id']
-            last_report = Report.last
+            last_report = Placement.last
             if !last_report.nil? 
                 if last_report.placement_id < placement['id']
                 start_date=placement['start_date'].to_date
@@ -29,7 +29,7 @@ class PlacementsController < ApplicationController
                 worker_id = placement['worker_id']
                 months = array_of_months(start_date, end_date)
                 days = array_of_months(start_date, end_date)
-                Placement.create(worker_id: worker_id, end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector)
+                Placement.create(worker_id: worker_id, end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector, placement_id: placement_id)
                 else 
                 flash[:info] = "There aren't new placements" 
                 # redirect_to request.referer
@@ -45,7 +45,7 @@ class PlacementsController < ApplicationController
               worker_id = placement['worker_id']
               months = array_of_months(start_date, end_date)
               days = array_of_days(start_date, end_date)
-              Placement.create(worker_id: worker_id, end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector)
+              Placement.create(worker_id: worker_id, end_date: end_date, start_date: start_date, monthly_salary: salary, client: client, category: sector, placement_id: placement_id)
           end
         end
       redirect_to placements_path
