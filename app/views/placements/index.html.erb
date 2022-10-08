@@ -1,5 +1,5 @@
-<%= link_to "Retrieve placements", retrieve_path, class:'retrieve-button'%>
 <div class='container'>
+    <%= link_to "Retrieve placements", retrieve_path, class:'retrieve-button'%>
   <h2>Placements</h2>
   <div class= "col-md-8 col-md-offset-2">
     <table class='table'>
@@ -21,6 +21,8 @@
       <%end%>
     </table>
     <%= link_to "Export", export_placements_path(format: 'csv'),class: "btn btn-primary" %>
-    <%= pie_chart [['one time', @one_time], ['repeated', @repeated]] %>
-
+    <h3 style="text-align:center">Workers reusability</h3>
+    <%= pie_chart [['one time', @one_time], ['repeated', @repeated]], colors: ["#6C63FF", "#C9B1FF"] %>
+    <h3 style="text-align:center">Vacancies filled over time </h3>
+    <%= column_chart Placement.group_by_month(:start_date).count %>
 </div>
