@@ -10,7 +10,7 @@ class PlacementsController < ApplicationController
     end
 
     def retrieve
-        url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=H2SO4plusNaOHequalNaSO4plusH2O"
+        url = "https://marketplace-app-sj.herokuapp.com/api/v1/reports?api_user=Reporting_app&token=#{ENV["KEY"]}"
         response = RestClient.get(url)
         @placements = JSON.parse(response)
         @placements.each do |placement|

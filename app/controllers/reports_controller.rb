@@ -2,7 +2,7 @@ class ReportsController < ApplicationController
   before_action :authorized?
   require 'csv'
   def sync
-      url = "http://localhost:3000/api/v1/reports?api_user=Reporting_app&token=#{ENV["KEY"]}"
+      url = "https://marketplace-app-sj.herokuapp.com/api/v1/reports?api_user=Reporting_app&token=#{ENV["KEY"]}"
       p url
       response = RestClient.get(url)
       @placements = JSON.parse(response)
