@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_08_064340) do
+ActiveRecord::Schema.define(version: 2022_10_09_151950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2022_10_08_064340) do
     t.integer "month", null: false
     t.integer "days", null: false
     t.float "salary_earned"
-    t.index ["placement_id"], name: "index_reports_on_placement_id", unique: true
+    t.index ["placement_id"], name: "index_reports_on_placement_id"
   end
 
   add_foreign_key "comments", "admins"
