@@ -34,7 +34,7 @@
       <td><%=Date::MONTHNAMES[report.month]%></td>
       <td><%=report.days%></td>
       <td><%=report.client%></td>
-      <td><%=report.salary_earned%></td>
+      <td><%=report.salary_earned.round(2)%></td>
       <td><%=report.sector%></td>
       <td><%= link_to "Show", report_path(report.id)%></td>
     </tr>
@@ -49,7 +49,7 @@
           <% @reports.each do |report|%>
           <% total_to_be_factured+=report.salary_earned%>
           <%end%>
-          <%=total_to_be_factured%></td>
+          <%=total_to_be_factured.round(2)%></td>
       <td></td>
     </tr>
 
