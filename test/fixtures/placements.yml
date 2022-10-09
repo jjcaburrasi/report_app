@@ -1,0 +1,9 @@
+placement1:
+ client: amazon
+ monthly_salary: 1000
+ start_date: 22/10/2022
+ end_date: 30/10/2022
+ category: logistics
+ worker_id: 3
+ placement_id: 3
+

@@ -15,7 +15,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
-  test "should create admin" do 
+  test "should create comment as admin" do 
       sign_in @admin
       assert_difference('Comment.count') do
         post report_comments_path(@report, @comment), params: { comment: {content: @comment.content} }
@@ -29,7 +29,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
    assert_redirected_to root_path
   end
 
-  test "vadmins should get new" do
+  test "admins should get new" do
     get new_report_comment_path(@report)
     assert :success
    end
