@@ -1,15 +1,13 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  start_date: 2022-10-05
-  end_date: 2022-10-05
-  monthly_salary: 1.5
+  month: 8
+  days: 10
+  salary_earned: 1.5
   client: MyString
   sector: MyString
 
 two:
-  start_date: 2022-10-05
-  end_date: 2022-10-05
-  monthly_salary: 1.5
+  month: 9
+  days: 10
+  salary_earned: 1.5
   client: MyString
   sector: MyString
