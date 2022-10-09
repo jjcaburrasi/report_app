@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+
+    before_action :authorized?
+    
     def new
         @report = Report.find(params[:report_id])
         @comment = Comment.new
@@ -22,5 +25,11 @@ class CommentsController < ApplicationController
     private
         def comment_params
             params.require(:comment).permit(:content, :admin_id, :report_id)
+        end
+
+        def authorized?
+            return unless !current_admin
+            flash[:danger]="Access denied"
+            redirect_to root_path
         end
 end
