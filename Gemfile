@@ -12,6 +12,7 @@ gem "groupdate"
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 gem 'dotenv-rails'
+gem 'newrelic_rpm'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 gem 'rest-client'
