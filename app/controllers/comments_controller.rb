@@ -1,7 +1,5 @@
 class CommentsController < ApplicationController
-
     before_action :authorized?
-    
     def new
         @report = Report.find(params[:report_id])
         @comment = Comment.new

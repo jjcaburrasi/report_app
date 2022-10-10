@@ -21,8 +21,14 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
         post report_comments_path(@report, @comment), params: { comment: {content: @comment.content} }
       end
       assert_redirected_to report_path(@report)
-      
     end
+
+  test "should not create comment as not admin" do
+    assert_no_difference('Comment.count') do
+      post report_comments_path(@report, @comment), params: { comment: {content: @comment.content} }
+    end
+    assert_redirected_to root_path
+  end
 
   test "visitors should not get new" do
    get new_report_comment_path(@report)
@@ -30,7 +36,8 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "admins should get new" do
-    get new_report_comment_path(@report)
+    sign_in @admin
+    get new_report_comment_path(@report, @comment)
     assert :success
    end
 end
